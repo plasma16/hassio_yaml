@@ -1,0 +1,61 @@
+- alias: lights on	
+  id: lights on
+  initial_state: on
+  trigger:                       # If any of following triggers are true
+    - platform: time 
+	  at: '08:00:00'
+	- platform: state
+	  entity_id: sensor.motion_sensor
+	  state: 'on'
+	- platform: state
+	  entity_id: binary_sensor.door1_open
+	  to: 'on'
+	- platform: state
+	  entity_id: binary_sensor.door2_open
+	  to: 'on'
+  action:                         # Turn on the lights
+    - service: light.turn_on
+      data:
+	    entity_id: light.living_room
+
+- alias: light off door close
+  id: light off door close
+  initial_state: on
+  trigger:                       # If any door has been closed for 3 minutes
+    - platform: state
+	  entity_id: binary_sensor.door1_open
+	  to: 'off'
+	  for: '00:03:00'
+	- platform: state
+	  entity_id: binary_sensor.door2_open
+	  to: 'off'
+	  for: '00:03:00'
+  condition:                      # Check that both doors are closed and no motion
+    - condition: state
+	  entity_id: binary_sensor.door1_open
+	  state: 'off'
+	- condition: state
+	  entity_id: binary_sensor.door2_open
+	  state: 'off'
+	- condition: state
+	  entity_id: sensor.motion_sensor
+	  state: 'off'
+  action:
+    - service: light.turn_off
+      data:
+	    entity_id: light.living_room
+
+- alias: light off no motion 10m
+  id: light off no motion 10m
+  initial_state: on
+  trigger:                          # If there's no motion for 10 minutes, turn off the lights.
+    - platform: state               # We don't care the state of the doors here. 
+	  entity_id: sensor.motion_sensor
+	  to: 'off'
+	  for: '00:10:00'
+  action:
+    - service: light.turn_off
+      data:
+	    entity_id: light.living_room
+	
+		
