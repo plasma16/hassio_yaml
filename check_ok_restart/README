@@ -11,4 +11,5 @@ Else, it reports back to Hassio via the Webhook component.
 Steps to Use
 1. Copy check_restart into /config
 2. Run "chmod +x /config/check_restart/" in your terminal to make it executable
-3. Copy relevant parts of configuration.yaml
+3. Edit check_restart and enter your Domain name
+4. Copy relevant parts of configuration.yaml
