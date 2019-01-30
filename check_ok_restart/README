@@ -1,0 +1,14 @@
+Target : Hassio 
+
+What This Does: 
+Check configuration, if ok restart hassio
+
+How It Does This:
+A script is set up to run a shell command.
+If check config is ok, it executes the restart command.
+Else, it reports back to Hassio via the Webhook component. 
+
+Steps to Use
+1. Copy check_restart into /config
+2. Run "chmod +x /config/check_restart/" in your terminal to make it executable
+3. Copy relevant parts of configuration.yaml

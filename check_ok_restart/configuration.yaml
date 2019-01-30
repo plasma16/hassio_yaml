@@ -1,0 +1,21 @@
+
+shell_command:
+  check_restart: /config/check_restart
+
+automation:
+- alias: ha_check_error
+  id: ha_check_error
+  initial_state: true
+  trigger:
+    platform: webhook
+    webhook_id: ha_check_error
+  action:
+    - service: notify.pushbullet
+      data:
+        message: "Config Failed"
+
+script:
+  check_restart:
+    sequence:
+      - service: shell_command.check_restart
+      

@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+if [ `hassio ha check` ]
+then
+  hassio ha restart
+else
+  curl -X POST https://<your_domain>/api/webhook/ha_check_error
+fi
