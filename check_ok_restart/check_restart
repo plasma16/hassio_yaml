@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [ `hassio ha check` ]
+if [ `hassio ha check |& tee check_config.log` ]
 then
   hassio ha restart
 else
